@@ -16,7 +16,7 @@ public class XLSXFileReader {
 	protected XSSFRow row;
 
 	
-	public void setExcelFile(String Path) throws Exception {
+	public String[] setExcelFile(String Path) throws Exception {
 		 
 			try {
 			FileInputStream ExcelFile = new FileInputStream(Path);
@@ -26,6 +26,7 @@ public class XLSXFileReader {
 				throw (e);
 			}
 
+		return new String[0];
 	}// end of setexcelfile
 	
 	@SuppressWarnings("null")

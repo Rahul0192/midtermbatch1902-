@@ -1,3 +1,5 @@
+//package db;
+
 package db;
 
 import java.io.FileInputStream;
@@ -5,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
 public class DbConnection {
+
 
     /**
      *
@@ -18,33 +22,33 @@ public class DbConnection {
      * */
 
 
-   static Connection connect = null;
-   static Statement statement = null;
-   static ResultSet resultSet = null;
-   static PreparedStatement ps = null;
+    static Connection connect = null;
+    static Statement statement = null;
+    static ResultSet resultSet = null;
+    static PreparedStatement ps = null;
 
 
-   public static Properties loadProperties() throws IOException {
+    public static Properties loadProperties() throws IOException {
 
-       InputStream inputStream = new FileInputStream("src/main/resources/secret.properties");
+        InputStream inputStream = new FileInputStream("src/main/resources/secret.properties");
 
-       Properties properties = new Properties();
-       properties.load(inputStream);
-       inputStream.close();
-       return properties;
-   }
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        inputStream.close();
+        return properties;
+    }
 
     public static void connectMySql() throws ClassNotFoundException, SQLException, IOException {
 
-      Properties properties = loadProperties();
+        Properties properties = loadProperties();
 
         String url = properties.getProperty("MYSQL.url");
         String userName = properties.getProperty("MYSQL.userName");
         String passWord = properties.getProperty("MYSQL.password");
 
-         Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
 
-         connect = DriverManager.getConnection(url,userName,passWord);
+        connect = DriverManager.getConnection(url,userName,passWord);
 
         System.out.println("Database Connected");
 
@@ -120,9 +124,9 @@ public class DbConnection {
     public static void createTableFromStringToMySql(String tableName, String columnName){
         try {
             connectMySql();
-            ps = connect.prepareStatement("DROP TABLE IF EXISTS `"+tableName+"`;");
+            ps = connect.prepareStatement("DROP TABLE IF EXISTS "+tableName+";");
             ps.executeUpdate();
-            ps = connect.prepareStatement("CREATE TABLE `"+tableName+"` (`ID` int(11) NOT NULL AUTO_INCREMENT,`"+columnName+"` varchar(2500) DEFAULT NULL,  PRIMARY KEY (`ID`) );");
+            ps = connect.prepareStatement("CREATE TABLE "+tableName+" (ID int(11) NOT NULL AUTO_INCREMENT,`"+columnName+"varchar(2500) DEFAULT NULL, PRIMARY KEY (ID`) );");
             ps.executeUpdate();
 
         } catch (IOException e) {
@@ -140,12 +144,13 @@ public class DbConnection {
      * Insert data to a existing table
      *
      * */
-    public static void insertDataFromArrayListToMySql(List<String> list,String tableName, String columnName)
+    public static void insertDataFromArrayListToMySql(List<String> list,String tableName,String columnName)
     {
         try {
             connectMySql();
 
             for(String st:list){
+
                 ps = connect.prepareStatement("INSERT INTO "+tableName+" ( "+columnName+" ) VALUES(?)");
                 ps.setObject(1,st);
                 ps.executeUpdate();
@@ -162,4 +167,3 @@ public class DbConnection {
 
 
 }
-
