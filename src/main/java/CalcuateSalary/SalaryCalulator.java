@@ -28,7 +28,7 @@ public class SalaryCalulator {
 
     }
 
-    public   void employee() {
+    public String employee() {
         String name;
         int perHour,hour,weeklyIncome,yearlyIncome,tax;
 
@@ -49,7 +49,8 @@ public class SalaryCalulator {
         System.out.println(" Yearly Net Income");
        yearlyIncome=weeklyIncome*52;
         System.out.println(yearlyIncome);
-        
+
+        return name;
     }
 }
 

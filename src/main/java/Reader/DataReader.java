@@ -1,7 +1,6 @@
 package Reader;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class DataReader {
 	/**
@@ -12,6 +11,10 @@ public class DataReader {
 	 * Use ForEach loop/while loop/Iterator to retrieve data.
 	 */
 	public static void main(String[] args) throws IOException {
+	readData();
+		}
+
+	public static String readData() throws IOException {
 		String pathename=System.getProperty("user.dir")+"/src/main/resources/Key-To-Success";
 		File file=new File(pathename);
 		FileReader filerader =null;
@@ -23,10 +26,10 @@ public class DataReader {
 			e.printStackTrace();
 		}
 		int i;
-		while ((i=filerader.read())!=-1){
-			System.out.print((char)i);
-		}
-		}
+		while ((i=filerader.read())!=-1)
+			System.out.print((char) i);
+		return pathename;
+	}
 
 
 
